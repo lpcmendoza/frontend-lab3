@@ -9,16 +9,16 @@ const App = () => {
   useEffect(() => {
     const fetchNews = () => {
       const shuffledStories = [...sampleNews.results].sort(() => 0.5 - Math.random());
-      const randomStories = shuffledStories.slice(0, 6); 
+      const randomStories = shuffledStories.slice(0, 6); // Display 5 random stories
       setStories(randomStories);
     };
 
     fetchNews();
   }, []);
 
-  
+  // Function to replace a closed story
   const replaceStory = (indexToReplace) => {
-    
+    // Get remaining stories that have not been displayed or closed
     const remainingStories = sampleNews.results.filter(
       (story) => !stories.includes(story) && !closedStories.includes(story)
     );
@@ -28,10 +28,10 @@ const App = () => {
       const newStory = remainingStories[randomIndex];
 
       const updatedStories = [...stories];
-      updatedStories[indexToReplace] = newStory; 
+      updatedStories[indexToReplace] = newStory; // Replace the closed story
       setStories(updatedStories);
 
-      
+      // Add this story to the closedStories list to avoid showing it again
       setClosedStories([...closedStories, stories[indexToReplace]]);
     }
   };
@@ -44,7 +44,7 @@ const App = () => {
           <Story
             key={index}
             story={story}
-            removeStory={() => replaceStory(index)} 
+            removeStory={() => replaceStory(index)} // Replace the story when closed
           />
         ))}
       </div>
